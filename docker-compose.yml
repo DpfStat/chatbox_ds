@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # 模型推理服务（Metal加速）
+  model-api:
+    image: llama-cpp-metal:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile.model
+    volumes:
+      - ./models:/models
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL=/models/deepseek-1.3b-chat.Q4_K_M.gguf
+      - N_CTX=2048
+      - N_THREADS=6
+    command: ["python3", "-m", "llama_cpp.server"]
+
+  # Dify 主服务
+  dify-core:
+    image: dify/dify:latest
+    depends_on:
+      - model-api
+    volumes:
+      - ./config/dify-config.yaml:/app/config.yaml
+      - ./knowledge/vector_db:/data/vector_db
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_BASE=http://model-api:8000
+      - OPENAI_API_KEY=local
+
+  # 网页界面
+  chat-ui:
+    image: ghcr.io/mckaywrigley/chatbot-ui:main
+    ports:
+      - "8080:3000"
+    environment:
+      - OPENAI_API_KEY=local
+      - OPENAI_API_HOST=http://dify-core:3000
+    depends_on:
+      - dify-core
+
+  # 知识库初始化（一次性任务）
+  knowledge-init:
+    image: python:3.9-slim
+    volumes:
+      - ./scripts:/scripts
+      - ./knowledge/documents:/documents
+      - ./knowledge/vector_db:/vector_db
+    command: /scripts/init-knowledge.sh
+    networks:
+      - default
+
+volumes:
+  model-store:
+  knowledge-store:
+
+networks:
+  default:
+    driver: bridge
