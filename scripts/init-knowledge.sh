@@ -11,7 +11,17 @@ INDEX_NAME="my_knowledge"     # 索引名称
 
 echo "===== 开始初始化知识库 ====="
 
-# 安装 Python 依赖
+# 安装 Python 依赖（包含文件类型检测支持）
+pip install --upgrade dify-client \
+    python-magic-bin \
+    numpy==1.21.0 \
+    huggingface-hub==0.19.4 \
+    sentence-transformers==2.2.2 \
+    faiss-cpu==1.7.4 \
+    fastapi==0.104.1 \
+    uvicorn==0.24.0.post1 \
+    python-dotenv==1.0.0 \
+    unstructured[md]
 
 
 # 处理文档（支持 PDF/TXT/MD）

@@ -12,14 +12,16 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MODEL=/models/deepseek-1.3b-chat.Q4_K_M.gguf
+      - MODEL=/models/deepseek-llm-7b-chat.Q4_K_M.gguf
       - N_CTX=2048
       - N_THREADS=6
     command: ["python3", "-m", "llama_cpp.server"]
 
   # Dify 主服务
   dify-core:
-    image: dify/dify:latest
+    build:
+      context: /Users/home/Desktop/AI/dify
+      dockerfile: API/Dockerfile
     depends_on:
       - model-api
     volumes:

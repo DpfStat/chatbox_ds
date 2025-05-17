@@ -4,7 +4,7 @@ model:
   openai:
     api_key: "local"             # 本地模式固定值
     api_base: "http://model-api:8000"  # 模型服务地址
-    model_name: "deepseek-1.3b-chat"   # 与模型文件名一致
+    model_name: "deepseek-llm-7b-chat.Q4_K_M"   # 与模型文件名一致
 
 knowledge:
   enabled: true                  # 启用知识库

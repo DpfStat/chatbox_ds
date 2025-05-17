@@ -3,7 +3,7 @@
 # 下载模型
 MODEL_DIR="./models"
 MODEL_FILE="deepseek-1.3b-chat.Q4_K_M.gguf"
-MODEL_URL="https://huggingface.co/TheBloke/deepseek-1.3B-Chat-GGUF/resolve/main/deepseek-1.3b-chat.Q4_K_M.gguf"
+MODEL_URL="https://huggingface.co/TheBloke/deepseek-1.3B-Chat-GGUF/resolve/main/deepseek-llm-7b-chat.Q4_K_M.gguf"
 if [ ! -f "${MODEL_DIR}/${MODEL_FILE}" ]; then
   echo "模型未找到，开始下载..."
   ./scripts/download-model.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODEL_URL="https://huggingface.co/TheBloke/deepseek-1.3B-Chat-GGUF/resolve/main/deepseek-1.3b-chat.Q4_K_M.gguf"
+MODEL_URL="https://huggingface.co/TheBloke/deepseek-1.3B-Chat-GGUF/resolve/main/deepseek-llm-7b-chat.Q4_K_M.gguf"
 MODEL_DIR="./models"
 mkdir -p $MODEL_DIR
 
